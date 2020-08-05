@@ -3,13 +3,14 @@ from tweepy import OAuthHandler, API
 from twilio.twiml.messaging_response import MessagingResponse
 import requests
 import datetime
+import os
 
 app = Flask(__name__)
 
-consumer_key = "faihxPpmBp11xVJrNtf5tqekc"
-consumer_secret = "BcRhLtrFrj2Mn7AAoKGcclT0JQ6qhSbUJI3A6VZE9xUpmFgB1f"
-access_token = "55815908-VhllSfYNV6pp5KNXWu9V7gAoOKPg6Ch8KoUHMU5cg"
-access_secret = "oBq0iSZH1n6WjnxeGgECr7XXZwe7ta2MGi2nYfTdrVMOC"
+consumer_key = os.environ.get('CONSUMER_KEY', "faihxPpmBp11xVJrNtf5tqekc")
+consumer_secret = os.environ.get('CONSUMER_SECRET', "BcRhLtrFrj2Mn7AAoKGcclT0JQ6qhSbUJI3A6VZE9xUpmFgB1f")
+access_token = os.environ.get('ACCESS_TOKEN', "55815908-VhllSfYNV6pp5KNXWu9V7gAoOKPg6Ch8KoUHMU5cg")
+access_secret = os.environ.get('ACCESS_TOKEN_SECRET',"oBq0iSZH1n6WjnxeGgECr7XXZwe7ta2MGi2nYfTdrVMOC")
 
 @app.route('/bot', methods=['POST'])
 def bot():

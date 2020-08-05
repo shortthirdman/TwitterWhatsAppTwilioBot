@@ -22,3 +22,11 @@ Twitter-WhatsApp-Twilio ChatBot
 - [zeyu2001/quarantine-bot](https://github.com/zeyu2001/quarantine-bot)
 
 - [Deploying a Flask Application to Heroku](https://stackabuse.com/deploying-a-flask-application-to-heroku/)
+
+### Links
+
+`join twenty-wire`
+
+[Twilio WhatsApp Sandbox API Endpoint](https://whatsapp-twitter-twilio.herokuapp.com/bot)
+
+[Defualt Twilio WhatsApp Sandbox API Endpoint](https://timberwolf-mastiff-9776.twil.io/demo-reply)
