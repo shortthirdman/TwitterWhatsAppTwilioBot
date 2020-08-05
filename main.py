@@ -14,14 +14,14 @@ access_secret = os.environ.get('ACCESS_TOKEN_SECRET',"oBq0iSZH1n6WjnxeGgECr7XXZw
 
 @app.route('/bot', methods=['POST'])
 def bot():
-    incoming_msg = request.values.get('Body', '').strip().lower()
+    incoming_msg = request.values.get('Body', '').strip()
     resp = MessagingResponse()
     msg = resp.message()
     responded = False
 
     me = authenticateCredentials()
 
-    if 'Start' in incoming_msg:
+    if 'Hello' in incoming_msg:
         reply = ("Hello and welcome to the Twitter Counter Stats WhatsApp Bot!\n\n"
                 "You can choose the below options to get your started:\n"
                 "- Overall tweets\n"
