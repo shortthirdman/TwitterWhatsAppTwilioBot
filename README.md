@@ -20,3 +20,5 @@ Twitter-WhatsApp-Twilio ChatBot
 - [Build a Soccer Stats WhatsApp Chatbot with Python, Flask and Twilio](https://www.twilio.com/blog/build-soccer-stats-whatsapp-chatbot-python-flask-twilio)
 
 - [zeyu2001/quarantine-bot](https://github.com/zeyu2001/quarantine-bot)
+
+- [Deploying a Flask Application to Heroku](https://stackabuse.com/deploying-a-flask-application-to-heroku/)

@@ -13,7 +13,7 @@ access_secret = "oBq0iSZH1n6WjnxeGgECr7XXZwe7ta2MGi2nYfTdrVMOC"
 
 @app.route('/bot', methods=['POST'])
 def bot():
-    incoming_msg = request.values.get('Body', '')..strip().lower()
+    incoming_msg = request.values.get('Body', '').strip().lower()
     resp = MessagingResponse()
     msg = resp.message()
     responded = False
@@ -65,11 +65,6 @@ def bot():
         last_status = ""
         reply = "Your last status update:\n **{}**".format(last_status)
         msg.body(reply)
-        responded = True
-
-    if me is None:
-        reply =
-        msg.body()
         responded = True
 
     if not responded:
