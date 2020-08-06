@@ -19,7 +19,7 @@ def bot():
     msg = resp.message()
     responded = False
 
-    me = authenticateCredentials()
+    me = authenticateCredentials().me()
 
     if 'Hello' in incoming_msg:
         reply = ("Hello and welcome to the Twitter Counter Stats WhatsApp Bot!\n\n"
@@ -35,36 +35,37 @@ def bot():
 
     if 'Tweets' in incoming_msg:
         statuses = "{:,}".format(me.statuses_count)
-        reply = "Your total tweet status count stands at {}".format(statuses)
+        reply = "Your total tweet status count stands at *{}*".format(statuses)
         msg.body(reply)
         responded = True
 
     if 'Followers' in incoming_msg:
-        reply = "You have {} followers.".format(me.followers_count)
+        reply = "You have *{}* followers.".format(me.followers_count)
         msg.body(reply)
         responded = True
 
     if 'Followings' in incoming_msg:
-        reply = "You follow **{}** accounts at the moment.".format(me.friends_count)
+        reply = "You follow *{}* accounts at the moment.".format(me.friends_count)
         msg.body(reply)
         responded = True
 
     if 'Account age' in incoming_msg:
-        delta = datetime.date.today() - me.created_at.date()
+        delta = (datetime.date.today()) - (me.created_at.date())
         account_age = delta.days
-        reply = "Your Twitter account is **{}** days old.".format(account_age)
+        reply = "Your Twitter account is *{}* days old.".format(account_age)
         msg.body(reply)
         responded = True
 
     if 'Daily' in incoming_msg:
-        daily_avg = '{:.2f}'.format(statuses/account_age)
-        reply = "You tweet at an average of **{}** daily.".format(daily_avg)
+        delta = (datetime.date.today()) - (me.created_at.date())
+        daily_avg = '{:.2f}'.format(me.statuses_count/delta.days)
+        reply = "You tweet at an average of *{}* daily.".format(daily_avg)
         msg.body(reply)
         responded = True
 
     if 'Last tweet' in incoming_msg:
         last_status = ""
-        reply = "Your last status update:\n **{}**".format(last_status)
+        reply = "Your last status update:\n *{}*".format(last_status)
         msg.body(reply)
         responded = True
 
@@ -84,7 +85,7 @@ def authenticateCredentials():
     except tweepy.RateLimitError as r:
         return "Twitter API Rate Limit exceeded. Please wait for the desired timeout period and try again."
         # return r.response.text
-    return api.me()
+    return api
 
 if __name__ == '__main__':
     app.run()
