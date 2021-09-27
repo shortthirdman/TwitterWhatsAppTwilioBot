@@ -47,56 +47,20 @@ def bot():
     if 'Hello' in incoming_msg:
         reply = ("Hello and welcome to the Twitter Counter Stats WhatsApp Bot!\n\n"
                 "You can choose the below options to get your started:\n"
-                "- Overall *Tweets*\n"
-                "- *Followers*\n"
-                "- *Followings*\n"
-                "- Account age\n"
-                "- *Daily* average\n"
-                "- Last tweet status\n"
-                "- *Summary*")
-        msg.body(reply)
-        responded = True
-
-    if 'Tweets' in incoming_msg:
-        statuses = "{:,}".format(me.statuses_count)
-        reply = "Your total tweet status count stands at *{}*".format(statuses)
-        msg.body(reply)
-        responded = True
-
-    if 'Followers' in incoming_msg:
-        reply = "You have *{}* followers.".format(me.followers_count)
-        msg.body(reply)
-        responded = True
-
-    if 'Followings' in incoming_msg:
-        reply = "You follow *{}* accounts at the moment.".format(me.friends_count)
-        msg.body(reply)
-        responded = True
-
-    if 'Account age' in incoming_msg:
-        delta = (datetime.date.today()) - (me.created_at.date())
-        account_age = delta.days
-        reply = "Your Twitter account is *{}* days old.".format(account_age)
-        msg.body(reply)
-        responded = True
-
-    if 'Daily' in incoming_msg:
-        delta = (datetime.date.today()) - (me.created_at.date())
-        daily_avg = '{:.2f}'.format(me.statuses_count/delta.days)
-        reply = "You tweet at an average of *{}* daily.".format(daily_avg)
-        msg.body(reply)
-        responded = True
-
-    if 'Last tweet' in incoming_msg:
-        last_status = ""
-        reply = "Your last status update:\n *{}*".format(last_status)
+                "- Summary\n"
+                "- User Lookup (Screen name)")
         msg.body(reply)
         responded = True
     
     if 'Summary' in incoming_msg:
-        reply = "Followers: *{}*\n".format(me.followers_count)
+        reply = "Screen Name: *{}*\n".format(me.screen_name)
+        reply += "Account User ID: *{}*\n".format(me.id_str)
+        reply += "Account Created On: *{}*\n".format(str(me.created_at))
+        reply += "Statuses: *{}* tweets\n".format(statuses := "{:,}".format(me.statuses_count))
+        reply += "Followers: *{}*\n".format(me.followers_count)
         reply += "Following: *{}*\n".format(me.friends_count)
-        reply += "Age: *{}* days\n".format(account_period(me))
+        reply += "Favourites: *{}*\n".format(me.favourites_count)
+        reply += "Account Age: *{}* days\n".format(account_period(me))
         reply += "Average: *{}* tweets per day".format(average_tweets(me))
         msg.body(reply)
         responded = True
