@@ -31,7 +31,7 @@ def average_tweets(me: object):
     daily_avg = '{:.2f}'.format(me.statuses_count/delta.days)
     return daily_avg
 
-def account_age(me: object):
+def account_period(me: object):
     delta = (datetime.date.today()) - (me.created_at.date())
     return delta.days
 
@@ -96,7 +96,7 @@ def bot():
     if 'Summary' in incoming_msg:
         reply = "Followers: *{}*\n".format(me.followers_count)
         reply += "Following: *{}*\n".format(me.friends_count)
-        reply += "Age: *{}*\n".format(account_age(me))
+        reply += "Age: *{}*\n".format(account_period(me))
         reply += "Average: *{}*".format(average_tweets(me))
         msg.body(reply)
         responded = True
