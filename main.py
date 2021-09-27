@@ -12,6 +12,29 @@ consumer_secret = os.environ.get('CONSUMER_SECRET')
 access_token = os.environ.get('ACCESS_TOKEN')
 access_secret = os.environ.get('ACCESS_TOKEN_SECRET')
 
+def authenticateCredentials():
+    auth = OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_secret)
+    api = API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+    try:
+        api.verify_credentials()
+    except tweepy.TweepError as t:
+        return "Error: Unable to connect to Twitter API this time. Please try again later!"
+        # return t.response.text
+    except tweepy.RateLimitError as r:
+        return "Twitter API Rate Limit exceeded. Please wait for the desired timeout period and try again."
+        # return r.response.text
+    return api
+
+def average_tweets(me: object):
+    delta = (datetime.date.today()) - (me.created_at.date())
+    daily_avg = '{:.2f}'.format(me.statuses_count/delta.days)
+    return daily_avg
+
+def account_age(me: object):
+    delta = (datetime.date.today()) - (me.created_at.date())
+    return delta.days
+
 @app.route('/bot', methods=['POST'])
 def bot():
     incoming_msg = request.values.get('Body', '').strip()
@@ -24,12 +47,13 @@ def bot():
     if 'Hello' in incoming_msg:
         reply = ("Hello and welcome to the Twitter Counter Stats WhatsApp Bot!\n\n"
                 "You can choose the below options to get your started:\n"
-                "- Overall tweets\n"
-                "- Followers\n"
-                "- Followings\n"
+                "- Overall *Tweets*\n"
+                "- *Followers*\n"
+                "- *Followings*\n"
                 "- Account age\n"
-                "- Daily average\n"
-                "- Last tweet status")
+                "- *Daily* average\n"
+                "- Last tweet status\n"
+                "- *Summary*")
         msg.body(reply)
         responded = True
 
@@ -68,24 +92,18 @@ def bot():
         reply = "Your last status update:\n *{}*".format(last_status)
         msg.body(reply)
         responded = True
+    
+    if 'Summary' in incoming_msg:
+        reply = "Followers: *{}*\n".format(me.followers_count)
+        reply += "Following: *{}*\n".format(me.friends_count)
+        reply += "Age: *{}*\n".format(account_age(me))
+        reply += "Average: *{}*".format(average_tweets(me))
+        msg.body(reply)
+        responded = True
 
     if not responded:
         msg.body('Sorry! Invalid option. You chose an invalid query option.')
     return str(resp)
-
-def authenticateCredentials():
-    auth = OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_secret)
-    api = API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-    try:
-        api.verify_credentials()
-    except tweepy.TweepError as t:
-        return "Error: Unable to connect to Twitter API this time. Please try again later!"
-        # return t.response.text
-    except tweepy.RateLimitError as r:
-        return "Twitter API Rate Limit exceeded. Please wait for the desired timeout period and try again."
-        # return r.response.text
-    return api
 
 if __name__ == '__main__':
     app.run()
