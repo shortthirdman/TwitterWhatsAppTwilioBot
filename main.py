@@ -96,8 +96,8 @@ def bot():
     if 'Summary' in incoming_msg:
         reply = "Followers: *{}*\n".format(me.followers_count)
         reply += "Following: *{}*\n".format(me.friends_count)
-        reply += "Age: *{}*\n".format(account_period(me))
-        reply += "Average: *{}*".format(average_tweets(me))
+        reply += "Age: *{}* days\n".format(account_period(me))
+        reply += "Average: *{}* tweets per day".format(average_tweets(me))
         msg.body(reply)
         responded = True
 
