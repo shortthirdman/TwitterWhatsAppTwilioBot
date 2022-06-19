@@ -18,7 +18,7 @@ access_secret = os.environ.get('ACCESS_TOKEN_SECRET')
 def authenticateCredentials():
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
-    api = API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+    api = API(auth, wait_on_rate_limit=True)
     try:
         api.verify_credentials()
     except tweepy.TweepError as t:
