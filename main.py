@@ -20,7 +20,9 @@ def authenticateCredentials():
     auth.set_access_token(access_token, access_secret)
     api = API(auth, wait_on_rate_limit=True)
     try:
-        api.verify_credentials()
+        api.verify_credentials(include_entities=False, include_email=False)
+    except tweepy.errors.Unauthorized as ue:
+        return ue.response.text
     except tweepy.TweepError as t:
         return "Error: Unable to connect to Twitter API this time. Please try again later!"
         # return t.response.text
@@ -45,8 +47,8 @@ def bot():
     msg = resp.message()
     responded = False
 
-    me = authenticateCredentials().me()
-
+    me = authenticateCredentials().verify_credentials(include_entities=False, include_email=False)
+    
     if 'Hello' in incoming_msg:
         reply = ("Hello and welcome to the Twitter Counter Stats WhatsApp Bot!\n\n"
                 "You can choose the below options to get you started:\n"
