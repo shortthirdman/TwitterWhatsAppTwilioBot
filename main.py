@@ -8,7 +8,7 @@ import arrow
 
 app = Flask(__name__)
 
-DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss ZZ'
+DATETIME_FORMAT = 'ddd DD-MMM-YYYY HH:mm:ss ZZ'
 
 consumer_key = os.environ.get('CONSUMER_KEY')
 consumer_secret = os.environ.get('CONSUMER_SECRET')
